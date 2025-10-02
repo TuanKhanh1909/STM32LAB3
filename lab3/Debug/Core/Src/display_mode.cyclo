@@ -1,0 +1,6 @@
+../Core/Src/display_mode.c:10:6:displayLED_YELLOW	5
+../Core/Src/display_mode.c:24:6:displayLED_RED	5
+../Core/Src/display_mode.c:38:6:displayLED_GREEN	5
+../Core/Src/display_mode.c:52:6:displayLED7SEG_LEFT	2
+../Core/Src/display_mode.c:81:6:displayLED7SEG_TOP	2
+../Core/Src/display_mode.c:111:6:displayLED7SEG_MODE	2

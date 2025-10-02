@@ -1,0 +1,19 @@
+/*
+ * global.h
+ *
+ *  Created on: Oct 1, 2025
+ *      Author: khanh
+ */
+
+#ifndef INC_GLOBAL_H_
+#define INC_GLOBAL_H_
+
+#include <input_reading.h>
+#include "main.h"
+#include "button.h"
+#include "software_timer.h"
+#include "define.h"
+#include "display_mode.h"
+#include "input_processing.h"
+
+#endif /* INC_GLOBAL_H_ */

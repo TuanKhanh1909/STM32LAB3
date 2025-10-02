@@ -1,0 +1,17 @@
+/*
+ * display_mode.c
+ *
+ *  Created on: Oct 2, 2025
+ *      Author: khanh
+ */
+
+#include "display_mode.h"
+
+void displayLED_YELLOW(int IS_ON, int index){
+	switch (index){
+	case 0:
+		if (IS_ON == 1) HAL_GPIO_WritePin(PORTYPE_A, PIN_YELLOW_1, GPIO_PIN_SET);
+		else HAL_GPIO_WritePin(PORTYPE_A, PIN_YELLOW_1, GPIO_PIN_SET);
+		break;
+	}
+}

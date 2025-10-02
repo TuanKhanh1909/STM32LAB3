@@ -1,0 +1,17 @@
+/*
+ * software_timer.h
+ *
+ *  Created on: Oct 1, 2025
+ *      Author: khanh
+ */
+
+#ifndef INC_SOFTWARE_TIMER_H_
+#define INC_SOFTWARE_TIMER_H_
+
+#define MAX_COUNTER 10
+#define TIMER_TICK 10
+void setTimer(int index, int duration);
+int isTimerExpired(int index);
+void timerRun();
+
+#endif /* INC_SOFTWARE_TIMER_H_ */

@@ -1,0 +1,15 @@
+/*
+ * define.h
+ *
+ *  Created on: Oct 2, 2025
+ *      Author: khanh
+ */
+
+#ifndef INC_DEFINE_H_
+#define INC_DEFINE_H_
+
+#include "global.h"
+
+
+
+#endif /* INC_DEFINE_H_ */

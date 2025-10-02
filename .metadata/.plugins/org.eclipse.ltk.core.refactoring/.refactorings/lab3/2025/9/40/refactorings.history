@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;lab3/Core/Inc/inputprocessing.h&apos; to &apos;input_processing.h&apos;" description="Rename resource &apos;inputprocessing.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Core/Inc/inputprocessing.h" name="input_processing.h" stamp="1759213015981" updateReferences="true"/>
+</session>

@@ -1,0 +1,14 @@
+/*
+ * display_mode.h
+ *
+ *  Created on: Oct 2, 2025
+ *      Author: khanh
+ */
+
+#ifndef INC_DISPLAY_MODE_H_
+#define INC_DISPLAY_MODE_H_
+
+#include "global.h"
+
+
+#endif /* INC_DISPLAY_MODE_H_ */
