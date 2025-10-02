@@ -23,7 +23,8 @@ static enum STATE currState[NO_BUTTONS] = {RELEASED, RELEASED, RELEASED};
 void fsm_for_input_processing(void){
 	for (int i = 0; i < NO_BUTTONS; i++)
 	{
-		if (is_buttons_pressed(i) == BUTTON_IS_PRESSED){
+
+		if (is_button_pressed(i) == BUTTON_IS_PRESSED){
 			prevState[i] = currState[i];
 			currState[i] = PRESSED;
 		}else
@@ -36,6 +37,7 @@ void fsm_for_input_processing(void){
 	case MODE_1_NORMAL:
 		if (currState[0] == PRESSED && prevState[0] == RELEASED){
 			currMode = MODE_2_RED_MODIFY;
+
 		}
 		 break;
 

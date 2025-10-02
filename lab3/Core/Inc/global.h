@@ -10,7 +10,6 @@
 
 #include <input_reading.h>
 #include "main.h"
-#include "button.h"
 #include "software_timer.h"
 #include "define.h"
 #include "display_mode.h"

@@ -1,34 +1,25 @@
-15:09:15 **** Incremental Build of configuration Debug for project lab3 ****
+17:19:54 **** Incremental Build of configuration Debug for project lab3 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/define.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/define.d" -MT"Core/Src/define.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/define.o"
 arm-none-eabi-gcc "../Core/Src/display_mode.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/display_mode.d" -MT"Core/Src/display_mode.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/display_mode.o"
 arm-none-eabi-gcc "../Core/Src/global.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/global.d" -MT"Core/Src/global.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/global.o"
 arm-none-eabi-gcc "../Core/Src/input_processing.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/input_processing.d" -MT"Core/Src/input_processing.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/input_processing.o"
+arm-none-eabi-gcc "../Core/Src/input_reading.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/input_reading.d" -MT"Core/Src/input_reading.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/input_reading.o"
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/software_timer.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/software_timer.d" -MT"Core/Src/software_timer.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/software_timer.o"
-../Core/Src/main.c:222:9: error: expected ';' before 'void'
-  222 | int flag
-      |         ^
-      |         ;
-  223 | void HAL_TIM_PeriodElapsedCallBack(TIM_HandleTypeDef *htim){
-      | ~~~~     
-../Core/Src/main.c: In function 'HAL_TIM_PeriodElapsedCallBack':
-../Core/Src/main.c:226:21: error: 'flagInteruptLED_and_SEG' undeclared (first use in this function)
-  226 |                 if (flagInteruptLED_and_SEG == 1){
-      |                     ^~~~~~~~~~~~~~~~~~~~~~~
-../Core/Src/main.c:226:21: note: each undeclared identifier is reported only once for each function it appears in
-../Core/Src/main.c:227:25: warning: implicit declaration of function 'runTimer_LED' [-Wimplicit-function-declaration]
-  227 |                         runTimer_LED();
-      |                         ^~~~~~~~~~~~
-../Core/Src/main.c:240:49: error: 'flagRed' undeclared (first use in this function)
-  240 |                                                 flagRed[0] = 0;
-      |                                                 ^~~~~~~
-../Core/Src/main.c:255:49: error: 'flagGreen' undeclared (first use in this function)
-  255 |                                                 flagGreen[0] = 0;
-      |                                                 ^~~~~~~~~
-../Core/Src/main.c:271:49: error: 'flagYellow' undeclared (first use in this function)
-  271 |                                                 flagYellow[0] = 1;
-      |                                                 ^~~~~~~~~~
-make: *** [Core/Src/subdir.mk:55: Core/Src/main.o] Error 1
-make: *** Waiting for unfinished jobs....
-"make -j12 all" terminated with exit code 2. Build might be incomplete.
+arm-none-eabi-gcc -o "lab3.elf" @"objects.list"   -mcpu=cortex-m3 -T"E:\Nam4\VXL_VDK\STM32LAB3\lab3\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lab3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: lab3.elf
+ 
+arm-none-eabi-size  lab3.elf 
+arm-none-eabi-objdump -h -S lab3.elf  > "lab3.list"
+arm-none-eabi-objcopy  -O ihex lab3.elf  "lab3.hex"
+   text	   data	    bss	    dec	    hex	filename
+   7044	     12	   1660	   8716	   220c	lab3.elf
+arm-none-eabi-objcopy  -O binary lab3.elf  "lab3.bin"
+Finished building: default.size.stdout
+ 
+Finished building: lab3.hex
+Finished building: lab3.list
+Finished building: lab3.bin
+ 
+ 
+ 

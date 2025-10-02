@@ -21,31 +21,31 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   8 .data         0000000c  20000000  08001b84  00003000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000074  2000000c  08001b90  0000300c  2**2
+  9 .bss          00000078  2000000c  08001b90  0000300c  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20000080  08001b90  00003080  2**0
+ 10 ._user_heap_stack 00000604  20000084  08001b90  00003084  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0000300c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00007d2e  00000000  00000000  00003035  2**0
+ 12 .debug_info   00007dc7  00000000  00000000  00003035  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001736  00000000  00000000  0000ad63  2**0
+ 13 .debug_abbrev 000017d6  00000000  00000000  0000adfc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000968  00000000  00000000  0000c4a0  2**3
+ 14 .debug_aranges 00000980  00000000  00000000  0000c5d8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 0000073c  00000000  00000000  0000ce08  2**0
+ 15 .debug_rnglists 00000749  00000000  00000000  0000cf58  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000012e1  00000000  00000000  0000d544  2**0
+ 16 .debug_macro  000014e7  00000000  00000000  0000d6a1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000a0e2  00000000  00000000  0000e825  2**0
+ 17 .debug_line   0000a812  00000000  00000000  0000eb88  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008241d  00000000  00000000  00018907  2**0
+ 18 .debug_str    00082435  00000000  00000000  0001939a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  0009ad24  2**0
+ 19 .comment      00000043  00000000  00000000  0009b7cf  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00002670  00000000  00000000  0009ad68  2**2
+ 20 .debug_frame  00002680  00000000  00000000  0009b814  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000004d  00000000  00000000  0009d3d8  2**0
+ 21 .debug_line_str 0000004d  00000000  00000000  0009de94  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -78,217 +78,219 @@ Disassembly of section .text:
  8000144:	20000010 	.word	0x20000010
  8000148:	08001b40 	.word	0x08001b40
 
-0800014c <is_button_pressed>:
+0800014c <fsm_for_input_processing>:
+
+static enum MODE currMode = MODE_1_NORMAL;
+static enum STATE prevState[NO_BUTTONS] = {RELEASED, RELEASED, RELEASED};
+static enum STATE currState[NO_BUTTONS] = {RELEASED, RELEASED, RELEASED};
+
+void fsm_for_input_processing(void){
+ 800014c:	b580      	push	{r7, lr}
+ 800014e:	b082      	sub	sp, #8
+ 8000150:	af00      	add	r7, sp, #0
+	for (int i = 0; i < NO_BUTTONS; i++)
+ 8000152:	2300      	movs	r3, #0
+ 8000154:	607b      	str	r3, [r7, #4]
+ 8000156:	e027      	b.n	80001a8 <fsm_for_input_processing+0x5c>
+	{
+
+		if (is_button_pressed(i) == BUTTON_IS_PRESSED){
+ 8000158:	687b      	ldr	r3, [r7, #4]
+ 800015a:	b2db      	uxtb	r3, r3
+ 800015c:	4618      	mov	r0, r3
+ 800015e:	f000 f879 	bl	8000254 <is_button_pressed>
+ 8000162:	4603      	mov	r3, r0
+ 8000164:	2b00      	cmp	r3, #0
+ 8000166:	d10e      	bne.n	8000186 <fsm_for_input_processing+0x3a>
+			prevState[i] = currState[i];
+ 8000168:	4a37      	ldr	r2, [pc, #220]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 800016a:	687b      	ldr	r3, [r7, #4]
+ 800016c:	4413      	add	r3, r2
+ 800016e:	7819      	ldrb	r1, [r3, #0]
+ 8000170:	4a36      	ldr	r2, [pc, #216]	@ (800024c <fsm_for_input_processing+0x100>)
+ 8000172:	687b      	ldr	r3, [r7, #4]
+ 8000174:	4413      	add	r3, r2
+ 8000176:	460a      	mov	r2, r1
+ 8000178:	701a      	strb	r2, [r3, #0]
+			currState[i] = PRESSED;
+ 800017a:	4a33      	ldr	r2, [pc, #204]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 800017c:	687b      	ldr	r3, [r7, #4]
+ 800017e:	4413      	add	r3, r2
+ 8000180:	2201      	movs	r2, #1
+ 8000182:	701a      	strb	r2, [r3, #0]
+ 8000184:	e00d      	b.n	80001a2 <fsm_for_input_processing+0x56>
+		}else
+		{
+			prevState[i] = currState[i];
+ 8000186:	4a30      	ldr	r2, [pc, #192]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 8000188:	687b      	ldr	r3, [r7, #4]
+ 800018a:	4413      	add	r3, r2
+ 800018c:	7819      	ldrb	r1, [r3, #0]
+ 800018e:	4a2f      	ldr	r2, [pc, #188]	@ (800024c <fsm_for_input_processing+0x100>)
+ 8000190:	687b      	ldr	r3, [r7, #4]
+ 8000192:	4413      	add	r3, r2
+ 8000194:	460a      	mov	r2, r1
+ 8000196:	701a      	strb	r2, [r3, #0]
+			currState[i] = RELEASED;
+ 8000198:	4a2b      	ldr	r2, [pc, #172]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 800019a:	687b      	ldr	r3, [r7, #4]
+ 800019c:	4413      	add	r3, r2
+ 800019e:	2200      	movs	r2, #0
+ 80001a0:	701a      	strb	r2, [r3, #0]
+	for (int i = 0; i < NO_BUTTONS; i++)
+ 80001a2:	687b      	ldr	r3, [r7, #4]
+ 80001a4:	3301      	adds	r3, #1
+ 80001a6:	607b      	str	r3, [r7, #4]
+ 80001a8:	687b      	ldr	r3, [r7, #4]
+ 80001aa:	2b02      	cmp	r3, #2
+ 80001ac:	ddd4      	ble.n	8000158 <fsm_for_input_processing+0xc>
+		}
+	}
+	switch (currMode){
+ 80001ae:	4b28      	ldr	r3, [pc, #160]	@ (8000250 <fsm_for_input_processing+0x104>)
+ 80001b0:	781b      	ldrb	r3, [r3, #0]
+ 80001b2:	2b03      	cmp	r3, #3
+ 80001b4:	d83a      	bhi.n	800022c <fsm_for_input_processing+0xe0>
+ 80001b6:	a201      	add	r2, pc, #4	@ (adr r2, 80001bc <fsm_for_input_processing+0x70>)
+ 80001b8:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 80001bc:	080001cd 	.word	0x080001cd
+ 80001c0:	080001e5 	.word	0x080001e5
+ 80001c4:	080001fd 	.word	0x080001fd
+ 80001c8:	08000215 	.word	0x08000215
+	case MODE_1_NORMAL:
+		if (currState[0] == PRESSED && prevState[0] == RELEASED){
+ 80001cc:	4b1e      	ldr	r3, [pc, #120]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 80001ce:	781b      	ldrb	r3, [r3, #0]
+ 80001d0:	2b01      	cmp	r3, #1
+ 80001d2:	d12d      	bne.n	8000230 <fsm_for_input_processing+0xe4>
+ 80001d4:	4b1d      	ldr	r3, [pc, #116]	@ (800024c <fsm_for_input_processing+0x100>)
+ 80001d6:	781b      	ldrb	r3, [r3, #0]
+ 80001d8:	2b00      	cmp	r3, #0
+ 80001da:	d129      	bne.n	8000230 <fsm_for_input_processing+0xe4>
+			currMode = MODE_2_RED_MODIFY;
+ 80001dc:	4b1c      	ldr	r3, [pc, #112]	@ (8000250 <fsm_for_input_processing+0x104>)
+ 80001de:	2201      	movs	r2, #1
+ 80001e0:	701a      	strb	r2, [r3, #0]
+
+		}
+		 break;
+ 80001e2:	e025      	b.n	8000230 <fsm_for_input_processing+0xe4>
+
+	case MODE_2_RED_MODIFY:
+		if (currState[0] == PRESSED && prevState[0] == RELEASED){
+ 80001e4:	4b18      	ldr	r3, [pc, #96]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 80001e6:	781b      	ldrb	r3, [r3, #0]
+ 80001e8:	2b01      	cmp	r3, #1
+ 80001ea:	d123      	bne.n	8000234 <fsm_for_input_processing+0xe8>
+ 80001ec:	4b17      	ldr	r3, [pc, #92]	@ (800024c <fsm_for_input_processing+0x100>)
+ 80001ee:	781b      	ldrb	r3, [r3, #0]
+ 80001f0:	2b00      	cmp	r3, #0
+ 80001f2:	d11f      	bne.n	8000234 <fsm_for_input_processing+0xe8>
+
+			currMode = MODE_3_AMBER_MODIFY;
+ 80001f4:	4b16      	ldr	r3, [pc, #88]	@ (8000250 <fsm_for_input_processing+0x104>)
+ 80001f6:	2202      	movs	r2, #2
+ 80001f8:	701a      	strb	r2, [r3, #0]
+		}
+		break;
+ 80001fa:	e01b      	b.n	8000234 <fsm_for_input_processing+0xe8>
+
+	case MODE_3_AMBER_MODIFY:
+		if (currState[0] == PRESSED && prevState[0] == RELEASED){
+ 80001fc:	4b12      	ldr	r3, [pc, #72]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 80001fe:	781b      	ldrb	r3, [r3, #0]
+ 8000200:	2b01      	cmp	r3, #1
+ 8000202:	d119      	bne.n	8000238 <fsm_for_input_processing+0xec>
+ 8000204:	4b11      	ldr	r3, [pc, #68]	@ (800024c <fsm_for_input_processing+0x100>)
+ 8000206:	781b      	ldrb	r3, [r3, #0]
+ 8000208:	2b00      	cmp	r3, #0
+ 800020a:	d115      	bne.n	8000238 <fsm_for_input_processing+0xec>
+			currMode = MODE_4_GREEN_MODIFY;
+ 800020c:	4b10      	ldr	r3, [pc, #64]	@ (8000250 <fsm_for_input_processing+0x104>)
+ 800020e:	2203      	movs	r2, #3
+ 8000210:	701a      	strb	r2, [r3, #0]
+		}
+		break;
+ 8000212:	e011      	b.n	8000238 <fsm_for_input_processing+0xec>
+
+	case MODE_4_GREEN_MODIFY:
+		if (currState[0] == PRESSED && prevState[0] == RELEASED){
+ 8000214:	4b0c      	ldr	r3, [pc, #48]	@ (8000248 <fsm_for_input_processing+0xfc>)
+ 8000216:	781b      	ldrb	r3, [r3, #0]
+ 8000218:	2b01      	cmp	r3, #1
+ 800021a:	d10f      	bne.n	800023c <fsm_for_input_processing+0xf0>
+ 800021c:	4b0b      	ldr	r3, [pc, #44]	@ (800024c <fsm_for_input_processing+0x100>)
+ 800021e:	781b      	ldrb	r3, [r3, #0]
+ 8000220:	2b00      	cmp	r3, #0
+ 8000222:	d10b      	bne.n	800023c <fsm_for_input_processing+0xf0>
+			currMode = MODE_1_NORMAL;
+ 8000224:	4b0a      	ldr	r3, [pc, #40]	@ (8000250 <fsm_for_input_processing+0x104>)
+ 8000226:	2200      	movs	r2, #0
+ 8000228:	701a      	strb	r2, [r3, #0]
+		}
+		break;
+ 800022a:	e007      	b.n	800023c <fsm_for_input_processing+0xf0>
+	default:
+		break;
+ 800022c:	bf00      	nop
+ 800022e:	e006      	b.n	800023e <fsm_for_input_processing+0xf2>
+		 break;
+ 8000230:	bf00      	nop
+ 8000232:	e004      	b.n	800023e <fsm_for_input_processing+0xf2>
+		break;
+ 8000234:	bf00      	nop
+ 8000236:	e002      	b.n	800023e <fsm_for_input_processing+0xf2>
+		break;
+ 8000238:	bf00      	nop
+ 800023a:	e000      	b.n	800023e <fsm_for_input_processing+0xf2>
+		break;
+ 800023c:	bf00      	nop
+	}
+}
+ 800023e:	bf00      	nop
+ 8000240:	3708      	adds	r7, #8
+ 8000242:	46bd      	mov	sp, r7
+ 8000244:	bd80      	pop	{r7, pc}
+ 8000246:	bf00      	nop
+ 8000248:	20000030 	.word	0x20000030
+ 800024c:	2000002c 	.word	0x2000002c
+ 8000250:	20000028 	.word	0x20000028
+
+08000254 <is_button_pressed>:
 		flagForButtonPress1s [i] = 0;
 	}
   }
 }
 
 unsigned char 	is_button_pressed(uint8_t index){
- 800014c:	b480      	push	{r7}
- 800014e:	b083      	sub	sp, #12
- 8000150:	af00      	add	r7, sp, #0
- 8000152:	4603      	mov	r3, r0
- 8000154:	71fb      	strb	r3, [r7, #7]
+ 8000254:	b480      	push	{r7}
+ 8000256:	b083      	sub	sp, #12
+ 8000258:	af00      	add	r7, sp, #0
+ 800025a:	4603      	mov	r3, r0
+ 800025c:	71fb      	strb	r3, [r7, #7]
 	if (index >= NO_OF_BUTTONS) return 0;
- 8000156:	79fb      	ldrb	r3, [r7, #7]
- 8000158:	2b02      	cmp	r3, #2
- 800015a:	d901      	bls.n	8000160 <is_button_pressed+0x14>
- 800015c:	2300      	movs	r3, #0
- 800015e:	e007      	b.n	8000170 <is_button_pressed+0x24>
+ 800025e:	79fb      	ldrb	r3, [r7, #7]
+ 8000260:	2b02      	cmp	r3, #2
+ 8000262:	d901      	bls.n	8000268 <is_button_pressed+0x14>
+ 8000264:	2300      	movs	r3, #0
+ 8000266:	e007      	b.n	8000278 <is_button_pressed+0x24>
 	return (buttonBuffer[index] == BUTTON_IS_PRESSED);
- 8000160:	79fb      	ldrb	r3, [r7, #7]
- 8000162:	4a06      	ldr	r2, [pc, #24]	@ (800017c <is_button_pressed+0x30>)
- 8000164:	5cd3      	ldrb	r3, [r2, r3]
- 8000166:	2b00      	cmp	r3, #0
- 8000168:	bf0c      	ite	eq
- 800016a:	2301      	moveq	r3, #1
- 800016c:	2300      	movne	r3, #0
- 800016e:	b2db      	uxtb	r3, r3
+ 8000268:	79fb      	ldrb	r3, [r7, #7]
+ 800026a:	4a06      	ldr	r2, [pc, #24]	@ (8000284 <is_button_pressed+0x30>)
+ 800026c:	5cd3      	ldrb	r3, [r2, r3]
+ 800026e:	2b00      	cmp	r3, #0
+ 8000270:	bf0c      	ite	eq
+ 8000272:	2301      	moveq	r3, #1
+ 8000274:	2300      	movne	r3, #0
+ 8000276:	b2db      	uxtb	r3, r3
 }
- 8000170:	4618      	mov	r0, r3
- 8000172:	370c      	adds	r7, #12
- 8000174:	46bd      	mov	sp, r7
- 8000176:	bc80      	pop	{r7}
- 8000178:	4770      	bx	lr
- 800017a:	bf00      	nop
- 800017c:	20000028 	.word	0x20000028
-
-08000180 <fsm_for_input_processing>:
-
-static enum MODE currMode = MODE_1_NORMAL;
-static enum STATE prevState[NO_OF_BUTTONS] = {RELEASED, RELEASED, RELEASED};
-static enum STATE currState[NO_OF_BUTTONS] = {RELEASED, RELEASED, RELEASED};
-static int holdNumberIfNoSubmit = 0;
-void fsm_for_input_processing(void){
- 8000180:	b580      	push	{r7, lr}
- 8000182:	b082      	sub	sp, #8
- 8000184:	af00      	add	r7, sp, #0
-	for (int i = 0; i < NO_OF_BUTTONS; i++)
- 8000186:	2300      	movs	r3, #0
- 8000188:	607b      	str	r3, [r7, #4]
- 800018a:	e027      	b.n	80001dc <fsm_for_input_processing+0x5c>
-	{
-		if (is_button_pressed(i) == BUTTON_IS_PRESSED){
- 800018c:	687b      	ldr	r3, [r7, #4]
- 800018e:	b2db      	uxtb	r3, r3
- 8000190:	4618      	mov	r0, r3
- 8000192:	f7ff ffdb 	bl	800014c <is_button_pressed>
- 8000196:	4603      	mov	r3, r0
- 8000198:	2b00      	cmp	r3, #0
- 800019a:	d10e      	bne.n	80001ba <fsm_for_input_processing+0x3a>
-			prevState[i] = currState[i];
- 800019c:	4a37      	ldr	r2, [pc, #220]	@ (800027c <fsm_for_input_processing+0xfc>)
- 800019e:	687b      	ldr	r3, [r7, #4]
- 80001a0:	4413      	add	r3, r2
- 80001a2:	7819      	ldrb	r1, [r3, #0]
- 80001a4:	4a36      	ldr	r2, [pc, #216]	@ (8000280 <fsm_for_input_processing+0x100>)
- 80001a6:	687b      	ldr	r3, [r7, #4]
- 80001a8:	4413      	add	r3, r2
- 80001aa:	460a      	mov	r2, r1
- 80001ac:	701a      	strb	r2, [r3, #0]
-			currState[i] = PRESSED;
- 80001ae:	4a33      	ldr	r2, [pc, #204]	@ (800027c <fsm_for_input_processing+0xfc>)
- 80001b0:	687b      	ldr	r3, [r7, #4]
- 80001b2:	4413      	add	r3, r2
- 80001b4:	2201      	movs	r2, #1
- 80001b6:	701a      	strb	r2, [r3, #0]
- 80001b8:	e00d      	b.n	80001d6 <fsm_for_input_processing+0x56>
-		}else
-		{
-			prevState[i] = currState[i];
- 80001ba:	4a30      	ldr	r2, [pc, #192]	@ (800027c <fsm_for_input_processing+0xfc>)
- 80001bc:	687b      	ldr	r3, [r7, #4]
- 80001be:	4413      	add	r3, r2
- 80001c0:	7819      	ldrb	r1, [r3, #0]
- 80001c2:	4a2f      	ldr	r2, [pc, #188]	@ (8000280 <fsm_for_input_processing+0x100>)
- 80001c4:	687b      	ldr	r3, [r7, #4]
- 80001c6:	4413      	add	r3, r2
- 80001c8:	460a      	mov	r2, r1
- 80001ca:	701a      	strb	r2, [r3, #0]
-			currState[i] = RELEASED;
- 80001cc:	4a2b      	ldr	r2, [pc, #172]	@ (800027c <fsm_for_input_processing+0xfc>)
- 80001ce:	687b      	ldr	r3, [r7, #4]
- 80001d0:	4413      	add	r3, r2
- 80001d2:	2200      	movs	r2, #0
- 80001d4:	701a      	strb	r2, [r3, #0]
-	for (int i = 0; i < NO_OF_BUTTONS; i++)
- 80001d6:	687b      	ldr	r3, [r7, #4]
- 80001d8:	3301      	adds	r3, #1
- 80001da:	607b      	str	r3, [r7, #4]
- 80001dc:	687b      	ldr	r3, [r7, #4]
- 80001de:	2b02      	cmp	r3, #2
- 80001e0:	ddd4      	ble.n	800018c <fsm_for_input_processing+0xc>
-		}
-	}
-	switch (currMode){
- 80001e2:	4b28      	ldr	r3, [pc, #160]	@ (8000284 <fsm_for_input_processing+0x104>)
- 80001e4:	781b      	ldrb	r3, [r3, #0]
- 80001e6:	2b03      	cmp	r3, #3
- 80001e8:	d83a      	bhi.n	8000260 <fsm_for_input_processing+0xe0>
- 80001ea:	a201      	add	r2, pc, #4	@ (adr r2, 80001f0 <fsm_for_input_processing+0x70>)
- 80001ec:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
- 80001f0:	08000201 	.word	0x08000201
- 80001f4:	08000219 	.word	0x08000219
- 80001f8:	08000231 	.word	0x08000231
- 80001fc:	08000249 	.word	0x08000249
-	case MODE_1_NORMAL:
-		if (currState[0] == PRESSED && prevState[0] == RELEASED){
- 8000200:	4b1e      	ldr	r3, [pc, #120]	@ (800027c <fsm_for_input_processing+0xfc>)
- 8000202:	781b      	ldrb	r3, [r3, #0]
- 8000204:	2b01      	cmp	r3, #1
- 8000206:	d12d      	bne.n	8000264 <fsm_for_input_processing+0xe4>
- 8000208:	4b1d      	ldr	r3, [pc, #116]	@ (8000280 <fsm_for_input_processing+0x100>)
- 800020a:	781b      	ldrb	r3, [r3, #0]
- 800020c:	2b00      	cmp	r3, #0
- 800020e:	d129      	bne.n	8000264 <fsm_for_input_processing+0xe4>
-			currMode = MODE_2_RED_MODIFY;
- 8000210:	4b1c      	ldr	r3, [pc, #112]	@ (8000284 <fsm_for_input_processing+0x104>)
- 8000212:	2201      	movs	r2, #1
- 8000214:	701a      	strb	r2, [r3, #0]
-		}
-		 break;
- 8000216:	e025      	b.n	8000264 <fsm_for_input_processing+0xe4>
-
-	case MODE_2_RED_MODIFY:
-		if (currState[0] == PRESSED && prevState[0] == RELEASED){
- 8000218:	4b18      	ldr	r3, [pc, #96]	@ (800027c <fsm_for_input_processing+0xfc>)
- 800021a:	781b      	ldrb	r3, [r3, #0]
- 800021c:	2b01      	cmp	r3, #1
- 800021e:	d123      	bne.n	8000268 <fsm_for_input_processing+0xe8>
- 8000220:	4b17      	ldr	r3, [pc, #92]	@ (8000280 <fsm_for_input_processing+0x100>)
- 8000222:	781b      	ldrb	r3, [r3, #0]
- 8000224:	2b00      	cmp	r3, #0
- 8000226:	d11f      	bne.n	8000268 <fsm_for_input_processing+0xe8>
-
-			currMode = MODE_3_AMBER_MODIFY;
- 8000228:	4b16      	ldr	r3, [pc, #88]	@ (8000284 <fsm_for_input_processing+0x104>)
- 800022a:	2202      	movs	r2, #2
- 800022c:	701a      	strb	r2, [r3, #0]
-		}
-		break;
- 800022e:	e01b      	b.n	8000268 <fsm_for_input_processing+0xe8>
-
-	case MODE_3_AMBER_MODIFY:
-		if (currState[0] == PRESSED && prevState[0] == RELEASED){
- 8000230:	4b12      	ldr	r3, [pc, #72]	@ (800027c <fsm_for_input_processing+0xfc>)
- 8000232:	781b      	ldrb	r3, [r3, #0]
- 8000234:	2b01      	cmp	r3, #1
- 8000236:	d119      	bne.n	800026c <fsm_for_input_processing+0xec>
- 8000238:	4b11      	ldr	r3, [pc, #68]	@ (8000280 <fsm_for_input_processing+0x100>)
- 800023a:	781b      	ldrb	r3, [r3, #0]
- 800023c:	2b00      	cmp	r3, #0
- 800023e:	d115      	bne.n	800026c <fsm_for_input_processing+0xec>
-			currMode = MODE_4_GREEN_MODIFY;
- 8000240:	4b10      	ldr	r3, [pc, #64]	@ (8000284 <fsm_for_input_processing+0x104>)
- 8000242:	2203      	movs	r2, #3
- 8000244:	701a      	strb	r2, [r3, #0]
-		}
-		break;
- 8000246:	e011      	b.n	800026c <fsm_for_input_processing+0xec>
-
-	case MODE_4_GREEN_MODIFY:
-		if (currState[0] == PRESSED && prevState[0] == RELEASED){
- 8000248:	4b0c      	ldr	r3, [pc, #48]	@ (800027c <fsm_for_input_processing+0xfc>)
- 800024a:	781b      	ldrb	r3, [r3, #0]
- 800024c:	2b01      	cmp	r3, #1
- 800024e:	d10f      	bne.n	8000270 <fsm_for_input_processing+0xf0>
- 8000250:	4b0b      	ldr	r3, [pc, #44]	@ (8000280 <fsm_for_input_processing+0x100>)
- 8000252:	781b      	ldrb	r3, [r3, #0]
- 8000254:	2b00      	cmp	r3, #0
- 8000256:	d10b      	bne.n	8000270 <fsm_for_input_processing+0xf0>
-			currMode = MODE_1_NORMAL;
- 8000258:	4b0a      	ldr	r3, [pc, #40]	@ (8000284 <fsm_for_input_processing+0x104>)
- 800025a:	2200      	movs	r2, #0
- 800025c:	701a      	strb	r2, [r3, #0]
-		}
-		break;
- 800025e:	e007      	b.n	8000270 <fsm_for_input_processing+0xf0>
-	default:
-		break;
- 8000260:	bf00      	nop
- 8000262:	e006      	b.n	8000272 <fsm_for_input_processing+0xf2>
-		 break;
- 8000264:	bf00      	nop
- 8000266:	e004      	b.n	8000272 <fsm_for_input_processing+0xf2>
-		break;
- 8000268:	bf00      	nop
- 800026a:	e002      	b.n	8000272 <fsm_for_input_processing+0xf2>
-		break;
- 800026c:	bf00      	nop
- 800026e:	e000      	b.n	8000272 <fsm_for_input_processing+0xf2>
-		break;
- 8000270:	bf00      	nop
-	}
-}
- 8000272:	bf00      	nop
- 8000274:	3708      	adds	r7, #8
- 8000276:	46bd      	mov	sp, r7
- 8000278:	bd80      	pop	{r7, pc}
- 800027a:	bf00      	nop
- 800027c:	20000030 	.word	0x20000030
- 8000280:	2000002c 	.word	0x2000002c
- 8000284:	2000002b 	.word	0x2000002b
+ 8000278:	4618      	mov	r0, r3
+ 800027a:	370c      	adds	r7, #12
+ 800027c:	46bd      	mov	sp, r7
+ 800027e:	bc80      	pop	{r7}
+ 8000280:	4770      	bx	lr
+ 8000282:	bf00      	nop
+ 8000284:	20000034 	.word	0x20000034
 
 08000288 <main>:
 /**
@@ -332,9 +334,9 @@ int main(void)
   {
 	  //you only need to add the fsm function here
 	  fsm_for_input_processing();
- 80002a2:	f7ff ff6d 	bl	8000180 <fsm_for_input_processing>
+ 80002a2:	f7ff ff53 	bl	800014c <fsm_for_input_processing>
  80002a6:	e7fc      	b.n	80002a2 <main+0x1a>
- 80002a8:	20000034 	.word	0x20000034
+ 80002a8:	20000038 	.word	0x20000038
 
 080002ac <SystemClock_Config>:
 /**
@@ -533,7 +535,7 @@ static void MX_TIM2_Init(void)
  80003b2:	3718      	adds	r7, #24
  80003b4:	46bd      	mov	sp, r7
  80003b6:	bd80      	pop	{r7, pc}
- 80003b8:	20000034 	.word	0x20000034
+ 80003b8:	20000038 	.word	0x20000038
 
 080003bc <MX_GPIO_Init>:
   * @brief GPIO Initialization Function
@@ -927,7 +929,7 @@ void TIM2_IRQHandler(void)
  800052a:	bf00      	nop
  800052c:	bd80      	pop	{r7, pc}
  800052e:	bf00      	nop
- 8000530:	20000034 	.word	0x20000034
+ 8000530:	20000038 	.word	0x20000038
 
 08000534 <SystemInit>:
   * @note   This function should be used only after reset.
@@ -1033,7 +1035,7 @@ LoopFillZerobss:
   ldr r2, =_sbss
  8000580:	2000000c 	.word	0x2000000c
   ldr r4, =_ebss
- 8000584:	20000080 	.word	0x20000080
+ 8000584:	20000084 	.word	0x20000084
 
 08000588 <ADC1_2_IRQHandler>:
  * @retval : None
@@ -1181,7 +1183,7 @@ __weak void HAL_IncTick(void)
  8000630:	bc80      	pop	{r7}
  8000632:	4770      	bx	lr
  8000634:	20000008 	.word	0x20000008
- 8000638:	2000007c 	.word	0x2000007c
+ 8000638:	20000080 	.word	0x20000080
 
 0800063c <HAL_GetTick>:
   * @note  This function is declared as __weak to be overwritten in case of other
@@ -1200,7 +1202,7 @@ __weak uint32_t HAL_GetTick(void)
  8000646:	46bd      	mov	sp, r7
  8000648:	bc80      	pop	{r7}
  800064a:	4770      	bx	lr
- 800064c:	2000007c 	.word	0x2000007c
+ 800064c:	20000080 	.word	0x20000080
 
 08000650 <__NVIC_SetPriorityGrouping>:
            In case of a conflict between priority grouping and available
