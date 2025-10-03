@@ -8,7 +8,6 @@
 #ifndef INC_DEFINE_H_
 #define INC_DEFINE_H_
 
-#include "global.h"
 
 #define NO_OF_BUTTON 3
 #define BUTTON_IS_PRESSED GPIO_PIN_RESET
@@ -57,5 +56,7 @@
 #define PIN_INP_SEG_MODE_2	GPIO_PIN_14	//PORT B
 #define PIN_INP_SEG_MODE_3	GPIO_PIN_15 //PORT B
 
-
+//TIMER
+#define TIMER_MODE_LED 1
+#define TIMER_NORMAL 0
 #endif /* INC_DEFINE_H_ */
