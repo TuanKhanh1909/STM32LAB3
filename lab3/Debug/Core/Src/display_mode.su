@@ -1,6 +1,6 @@
 ../Core/Src/display_mode.c:10:6:displayLED_YELLOW	16	static
 ../Core/Src/display_mode.c:24:6:displayLED_RED	16	static
 ../Core/Src/display_mode.c:38:6:displayLED_GREEN	16	static
-../Core/Src/display_mode.c:52:6:displayLED7SEG_LEFT	64	static
-../Core/Src/display_mode.c:81:6:displayLED7SEG_TOP	64	static
-../Core/Src/display_mode.c:111:6:displayLED7SEG_MODE	40	static
+../Core/Src/display_mode.c:52:6:displayLED7SEG_LEFT	24	static
+../Core/Src/display_mode.c:69:6:displayLED7SEG_TOP	24	static
+../Core/Src/display_mode.c:88:6:displayLED7SEG_MODE	16	static

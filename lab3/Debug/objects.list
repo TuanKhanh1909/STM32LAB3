@@ -1,4 +1,3 @@
-"./Core/Src/button.o"
 "./Core/Src/define.o"
 "./Core/Src/display_mode.o"
 "./Core/Src/global.o"
@@ -11,6 +10,7 @@
 "./Core/Src/syscalls.o"
 "./Core/Src/sysmem.o"
 "./Core/Src/system_stm32f1xx.o"
+"./Core/Src/update_traffic_light.o"
 "./Core/Startup/startup_stm32f103c6tx.o"
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o"
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o"

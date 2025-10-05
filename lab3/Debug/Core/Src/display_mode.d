@@ -26,7 +26,8 @@ Core/Src/display_mode.o: ../Core/Src/display_mode.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Core/Inc/software_timer.h ../Core/Inc/define.h \
- ../Core/Inc/display_mode.h ../Core/Inc/input_processing.h
+ ../Core/Inc/display_mode.h ../Core/Inc/input_processing.h \
+ ../Core/Inc/update_traffic_light.h
 ../Core/Inc/display_mode.h:
 ../Core/Inc/global.h:
 ../Core/Inc/input_reading.h:
@@ -59,3 +60,4 @@ Core/Src/display_mode.o: ../Core/Src/display_mode.c \
 ../Core/Inc/define.h:
 ../Core/Inc/display_mode.h:
 ../Core/Inc/input_processing.h:
+../Core/Inc/update_traffic_light.h:

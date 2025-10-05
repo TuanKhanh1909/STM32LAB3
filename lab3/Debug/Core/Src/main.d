@@ -26,7 +26,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/global.h ../Core/Inc/input_reading.h ../Core/Inc/main.h \
  ../Core/Inc/software_timer.h ../Core/Inc/define.h \
  ../Core/Inc/display_mode.h ../Core/Inc/global.h \
- ../Core/Inc/input_processing.h
+ ../Core/Inc/input_processing.h ../Core/Inc/update_traffic_light.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -60,3 +60,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/display_mode.h:
 ../Core/Inc/global.h:
 ../Core/Inc/input_processing.h:
+../Core/Inc/update_traffic_light.h:

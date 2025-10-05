@@ -57,6 +57,7 @@
 #define PIN_INP_SEG_MODE_3	GPIO_PIN_15 //PORT B
 
 //TIMER
+#define TIMER_1S_COUNTDOWN 2
 #define TIMER_MODE_LED 1
-#define TIMER_NORMAL 0
+#define TIMER_TRAFFIC 0
 #endif /* INC_DEFINE_H_ */

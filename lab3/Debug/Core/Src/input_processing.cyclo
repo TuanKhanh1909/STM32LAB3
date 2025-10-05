@@ -1,1 +1,2 @@
-../Core/Src/input_processing.c:27:6:fsm_for_input_processing	27
+../Core/Src/input_processing.c:30:6:startNormalMode	1
+../Core/Src/input_processing.c:40:6:fsm_for_input_processing	34

@@ -13,16 +13,29 @@
 
 enum STATE { RELEASED, PRESSED, PRESSED_MORE_THAN_1_SECOND};
 
-enum MODE {	MODE_1_NORMAL, MODE_2_RED_MODIFY, MODE_3_AMBER_MODIFY, MODE_4_GREEN_MODIFY};
+enum TRAFFIC_STATE traffic_state = RED_GREEN;
+enum MODE currMode = MODE_1_NORMAL;
 
-static enum MODE currMode = MODE_1_NORMAL;
 static enum STATE prevState[NO_BUTTONS] = {RELEASED, RELEASED, RELEASED};
 static enum STATE currState[NO_BUTTONS] = {RELEASED, RELEASED, RELEASED};
 
 int time_red = 5000;
 int time_amber = 2000;
-int timer_green = 3000;
+int time_green = 3000;
 int temp_value= 0;
+
+int time_counter_road1 = 0;
+int time_counter_road2 = 0;
+
+void startNormalMode(){
+	currMode = MODE_1_NORMAL;
+	traffic_state = RED_GREEN;
+	time_counter_road1 = time_red / 1000;
+	time_counter_road2 = time_green / 1000;
+
+	setTimer(TIMER_TRAFFIC, time_green);
+	setTimer(TIMER_1S_COUNTDOWN, 1000);
+}
 
 void fsm_for_input_processing(void){
 	for (int i = 0; i < NO_BUTTONS; i++)
@@ -39,11 +52,23 @@ void fsm_for_input_processing(void){
 	}
 	switch (currMode){
 	case MODE_1_NORMAL:
+			if (isTimerExpired(TIMER_1S_COUNTDOWN) == 1){
+				time_counter_road1--;
+				time_counter_road2--;
+				setTimer(TIMER_1S_COUNTDOWN, 1000);
+			}
+			updateTrafficLight();
+
 		if (currState[0] == PRESSED && prevState[0] == RELEASED){
+			displayLED_GREEN(0, 0);
+			displayLED_GREEN(0, 1);
+			displayLED_RED(0, 0);
+			displayLED_RED(0, 1);
+			displayLED_YELLOW(0, 0);
+			displayLED_YELLOW(0, 1);
 			temp_value = time_red/1000;
 			setTimer(TIMER_MODE_LED, 250);
 			currMode = MODE_2_RED_MODIFY;
-
 		}
 		 break;
 
@@ -64,14 +89,17 @@ void fsm_for_input_processing(void){
 			}
 			if(currState[2] == PRESSED && prevState[2] == RELEASED){
 				time_red = temp_value * 1000;
-				currMode = MODE_1_NORMAL;
+				time_green += ((temp_value * 1000) - 5000);
 				displayLED_RED(0, 0);
 				displayLED_RED(0, 1);
+				startNormalMode();
 			}
 
 
 		if (currState[0] == PRESSED && prevState[0] == RELEASED){
 			temp_value = time_amber/1000;
+			displayLED_RED(0, 0);
+			displayLED_RED(0, 1);
 			setTimer(TIMER_MODE_LED, 250);
 			currMode = MODE_3_AMBER_MODIFY;
 		}
@@ -88,15 +116,25 @@ void fsm_for_input_processing(void){
 		displayLED7SEG_MODE(3);
 		displayLED7SEG_LEFT(temp_value);
 
+		if (currState[1] == PRESSED && prevState[1] == RELEASED){
+				temp_value++;
+				if (temp_value > 99){
+					temp_value = 1;
+				}
+			}
+
 		if(currState[2] == PRESSED && prevState[2] == RELEASED){
 			time_amber = temp_value*1000;
-			currMode = MODE_1_NORMAL;
+			time_red += ((temp_value *1000) - 2000);
 			displayLED_YELLOW(0, 0);
 			displayLED_YELLOW(0, 1);
+			startNormalMode();
 		}
 
 		if (currState[0] == PRESSED && prevState[0] == RELEASED){
-			temp_value = timer_green /1000;
+			temp_value = time_green /1000;
+			displayLED_YELLOW(0, 0);
+				displayLED_YELLOW(0, 1);
 			setTimer(TIMER_MODE_LED, 250);
 			currMode = MODE_4_GREEN_MODIFY;
 		}
@@ -113,11 +151,20 @@ void fsm_for_input_processing(void){
 		displayLED7SEG_MODE(4);
 		displayLED7SEG_LEFT(temp_value);
 
+		if (currState[1] == PRESSED && prevState[1] == RELEASED){
+				temp_value++;
+				if (temp_value > 99){
+					temp_value = 1;
+				}
+			}
+
 		if (currState[2] == PRESSED && prevState[2] == RELEASED){
-			timer_green = temp_value * 1000;
+			time_green = temp_value * 1000;
+			time_red += ((temp_value * 1000) - 3000);
 			currMode = MODE_1_NORMAL;
 			displayLED_GREEN(0, 0);
 			displayLED_GREEN(0, 1);
+		    startNormalMode();
 		}
 
 
