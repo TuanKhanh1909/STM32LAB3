@@ -81,6 +81,7 @@ void fsm_for_input_processing(void){
 			}
 			displayLED7SEG_MODE(2);
 			displayLED7SEG_LEFT(temp_value);
+			displayLED7SEG_TOP(temp_value);
 			if (currState[1] == PRESSED && prevState[1] == RELEASED){
 				temp_value++;
 				if (temp_value > 99){
@@ -88,8 +89,9 @@ void fsm_for_input_processing(void){
 				}
 			}
 			if(currState[2] == PRESSED && prevState[2] == RELEASED){
+
+				time_green += ((temp_value * 1000) - time_red);
 				time_red = temp_value * 1000;
-				time_green += ((temp_value * 1000) - 5000);
 				displayLED_RED(0, 0);
 				displayLED_RED(0, 1);
 				startNormalMode();
@@ -115,6 +117,7 @@ void fsm_for_input_processing(void){
 
 		displayLED7SEG_MODE(3);
 		displayLED7SEG_LEFT(temp_value);
+		displayLED7SEG_TOP(temp_value);
 
 		if (currState[1] == PRESSED && prevState[1] == RELEASED){
 				temp_value++;
@@ -124,8 +127,9 @@ void fsm_for_input_processing(void){
 			}
 
 		if(currState[2] == PRESSED && prevState[2] == RELEASED){
+
+			time_red += ((temp_value *1000) - time_amber);
 			time_amber = temp_value*1000;
-			time_red += ((temp_value *1000) - 2000);
 			displayLED_YELLOW(0, 0);
 			displayLED_YELLOW(0, 1);
 			startNormalMode();
@@ -150,6 +154,7 @@ void fsm_for_input_processing(void){
 
 		displayLED7SEG_MODE(4);
 		displayLED7SEG_LEFT(temp_value);
+		displayLED7SEG_TOP(temp_value);
 
 		if (currState[1] == PRESSED && prevState[1] == RELEASED){
 				temp_value++;
@@ -159,8 +164,9 @@ void fsm_for_input_processing(void){
 			}
 
 		if (currState[2] == PRESSED && prevState[2] == RELEASED){
+
+			time_red += ((temp_value * 1000) - time_green);
 			time_green = temp_value * 1000;
-			time_red += ((temp_value * 1000) - 3000);
 			currMode = MODE_1_NORMAL;
 			displayLED_GREEN(0, 0);
 			displayLED_GREEN(0, 1);

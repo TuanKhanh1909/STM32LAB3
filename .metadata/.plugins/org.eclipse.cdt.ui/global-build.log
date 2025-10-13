@@ -1,7 +1,20 @@
-20:26:25 **** Incremental Build of configuration Debug for project lab3 ****
+15:22:24 **** Incremental Build of configuration Debug for project lab3 ****
 make -j12 all 
+arm-none-eabi-gcc "../Core/Src/input_processing.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/input_processing.d" -MT"Core/Src/input_processing.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/input_processing.o"
+arm-none-eabi-gcc -o "lab3.elf" @"objects.list"   -mcpu=cortex-m3 -T"E:\Nam4\VXL_VDK\STM32LAB3\lab3\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lab3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: lab3.elf
+ 
 arm-none-eabi-size  lab3.elf 
+arm-none-eabi-objdump -h -S lab3.elf  > "lab3.list"
+arm-none-eabi-objcopy  -O ihex lab3.elf  "lab3.hex"
    text	   data	    bss	    dec	    hex	filename
-  10212	     40	   1760	  12012	   2eec	lab3.elf
+  10244	     40	   1760	  12044	   2f0c	lab3.elf
+arm-none-eabi-objcopy  -O binary lab3.elf  "lab3.bin"
 Finished building: default.size.stdout
+ 
+Finished building: lab3.hex
+Finished building: lab3.bin
+ 
+ 
+Finished building: lab3.list
  
